@@ -1,0 +1,947 @@
+{
+  "name": "zovo-svn-client",
+  "displayName": "SVN Client & Subversion Source Control (Commit, Blame, Log, Diff)",
+  "description": "Free SVN client for VS Code that uses your own svn command line. Subversion source control with commit, update, diff, log, blame, branch, switch and merge, one svn status at a time, and nested working copies found once. No sign-in, no network of its own.",
+  "version": "0.1.0",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1B1F2E",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.90.0",
+    "node": ">=18"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "svn",
+    "subversion",
+    "svn client",
+    "subversion client",
+    "tortoisesvn",
+    "svn blame",
+    "svn log",
+    "svn diff",
+    "svn commit",
+    "svn update",
+    "scm",
+    "source control",
+    "version control",
+    "branch",
+    "merge",
+    "changelist",
+    "shelve",
+    "revision graph",
+    "offline",
+    "free"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "workspaceContains:.svn",
+    "workspaceContains:*/.svn",
+    "workspaceContains:*/*/.svn",
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "svn runs only from the PATH or the user-level zovoSvn.path setting; a workspace cannot point it at another program.",
+      "restrictedConfigurations": [
+        "zovoSvn.path"
+      ]
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "zovoSvn.checkout",
+        "title": "Checkout...",
+        "category": "SVN",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "zovoSvn.commit",
+        "title": "Commit",
+        "category": "SVN",
+        "icon": "$(check)"
+      },
+      {
+        "command": "zovoSvn.commitSelected",
+        "title": "Commit Selected Files",
+        "category": "SVN",
+        "icon": "$(check)"
+      },
+      {
+        "command": "zovoSvn.commitChangelist",
+        "title": "Commit Changelist",
+        "category": "SVN",
+        "icon": "$(check)"
+      },
+      {
+        "command": "zovoSvn.refresh",
+        "title": "Refresh",
+        "category": "SVN",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "zovoSvn.update",
+        "title": "Update",
+        "category": "SVN",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "zovoSvn.updateToRevision",
+        "title": "Update to Revision...",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.cleanup",
+        "title": "Cleanup",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.add",
+        "title": "Add",
+        "category": "SVN",
+        "icon": "$(add)"
+      },
+      {
+        "command": "zovoSvn.addAll",
+        "title": "Add All Unversioned",
+        "category": "SVN",
+        "icon": "$(add)"
+      },
+      {
+        "command": "zovoSvn.revert",
+        "title": "Revert (Discard Changes)",
+        "category": "SVN",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "zovoSvn.revertAll",
+        "title": "Revert All",
+        "category": "SVN",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "zovoSvn.delete",
+        "title": "Delete (svn delete)",
+        "category": "SVN",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "zovoSvn.ignore",
+        "title": "Add to svn:ignore",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.resolve",
+        "title": "Resolve Conflict...",
+        "category": "SVN",
+        "icon": "$(check)"
+      },
+      {
+        "command": "zovoSvn.openChange",
+        "title": "Open Changes",
+        "category": "SVN",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "zovoSvn.openFile",
+        "title": "Open File",
+        "category": "SVN",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "zovoSvn.openBase",
+        "title": "Open BASE Version",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.addToChangelist",
+        "title": "Move to Changelist...",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.removeFromChangelist",
+        "title": "Remove from Changelist",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.showLog",
+        "title": "Show Log (History)",
+        "category": "SVN",
+        "icon": "$(history)"
+      },
+      {
+        "command": "zovoSvn.showFileLog",
+        "title": "Show File History",
+        "category": "SVN",
+        "icon": "$(history)"
+      },
+      {
+        "command": "zovoSvn.toggleBlame",
+        "title": "Toggle Blame",
+        "category": "SVN",
+        "icon": "$(person)"
+      },
+      {
+        "command": "zovoSvn.openLineRevision",
+        "title": "Open Changes of This Line's Revision",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.openRevisionDiff",
+        "title": "Open Changes of a Revision",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.switch",
+        "title": "Switch to Branch or Tag...",
+        "category": "SVN",
+        "icon": "$(git-branch)"
+      },
+      {
+        "command": "zovoSvn.createBranch",
+        "title": "Create Branch...",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.createTag",
+        "title": "Create Tag...",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.merge",
+        "title": "Merge from Branch...",
+        "category": "SVN",
+        "icon": "$(git-merge)"
+      },
+      {
+        "command": "zovoSvn.revisionGraph",
+        "title": "Show Revision Graph",
+        "category": "SVN",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "zovoSvn.shelve",
+        "title": "Shelve Changes...",
+        "category": "SVN",
+        "icon": "$(archive)"
+      },
+      {
+        "command": "zovoSvn.unshelve",
+        "title": "Unshelve...",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.newChangelist",
+        "title": "New Changelist...",
+        "category": "SVN",
+        "icon": "$(add)"
+      },
+      {
+        "command": "zovoSvn.moveToChangelist",
+        "title": "Move to Changelist...",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.rescan",
+        "title": "Find Working Copies Again",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.installHelp",
+        "title": "Install the svn Command Line...",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.showOutput",
+        "title": "Show Output",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.openWalkthrough",
+        "title": "Get Started",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.supportDeveloper",
+        "title": "Support the developer",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.moreViewers",
+        "title": "More free tools by Zovo",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.unlockWithSponsors",
+        "title": "Unlock Zovo Pro with GitHub Sponsors",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.enterLicenseKey",
+        "title": "Enter Zovo license key",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.getPro",
+        "title": "Get Zovo Pro (USD 15 once, all Zovo tools)",
+        "category": "SVN"
+      },
+      {
+        "command": "zovoSvn.removeLicense",
+        "title": "Remove Zovo license from this editor",
+        "category": "SVN"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "zovoSvn.commitSelected",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.commitChangelist",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.add",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.addAll",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.revert",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.revertAll",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.delete",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.ignore",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.resolve",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.openChange",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.openFile",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.openBase",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.addToChangelist",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.removeFromChangelist",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.openRevisionDiff",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.moveToChangelist",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.newChangelist",
+          "when": "false"
+        },
+        {
+          "command": "zovoSvn.unlockWithSponsors",
+          "when": "zovoSvn.proEnabled"
+        },
+        {
+          "command": "zovoSvn.enterLicenseKey",
+          "when": "zovoSvn.proEnabled"
+        },
+        {
+          "command": "zovoSvn.getPro",
+          "when": "zovoSvn.proEnabled"
+        },
+        {
+          "command": "zovoSvn.removeLicense",
+          "when": "zovoSvn.proEnabled"
+        },
+        {
+          "command": "zovoSvn.openLineRevision",
+          "when": "zovoSvn.blameOn"
+        },
+        {
+          "command": "zovoSvn.commit",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.refresh",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.update",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.updateToRevision",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.cleanup",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.showLog",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.switch",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.createBranch",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.createTag",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.merge",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.revisionGraph",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.shelve",
+          "when": "zovoSvn.repoCount > 0"
+        },
+        {
+          "command": "zovoSvn.unshelve",
+          "when": "zovoSvn.repoCount > 0"
+        }
+      ],
+      "scm/title": [
+        {
+          "command": "zovoSvn.commit",
+          "group": "navigation@1",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.update",
+          "group": "navigation@2",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.refresh",
+          "group": "navigation@3",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.showLog",
+          "group": "navigation@4",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.update",
+          "group": "1_sync@1",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.updateToRevision",
+          "group": "1_sync@2",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.cleanup",
+          "group": "1_sync@3",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.switch",
+          "group": "2_branch@1",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.createBranch",
+          "group": "2_branch@2",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.createTag",
+          "group": "2_branch@3",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.merge",
+          "group": "2_branch@4",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.showLog",
+          "group": "3_history@1",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.revisionGraph",
+          "group": "3_history@2",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.shelve",
+          "group": "4_shelve@1",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.unshelve",
+          "group": "4_shelve@2",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.showOutput",
+          "group": "9_other@1",
+          "when": "scmProvider == zovo-svn"
+        }
+      ],
+      "scm/resourceGroup/context": [
+        {
+          "command": "zovoSvn.commit",
+          "group": "inline@1",
+          "when": "scmProvider == zovo-svn && scmResourceGroup == changes"
+        },
+        {
+          "command": "zovoSvn.revertAll",
+          "group": "inline@2",
+          "when": "scmProvider == zovo-svn && scmResourceGroup == changes"
+        },
+        {
+          "command": "zovoSvn.addAll",
+          "group": "inline@1",
+          "when": "scmProvider == zovo-svn && scmResourceGroup == unversioned"
+        },
+        {
+          "command": "zovoSvn.commitChangelist",
+          "group": "inline@1",
+          "when": "scmProvider == zovo-svn && scmResourceGroup =~ /^cl:/"
+        },
+        {
+          "command": "zovoSvn.revertAll",
+          "group": "inline@2",
+          "when": "scmProvider == zovo-svn && scmResourceGroup =~ /^cl:/"
+        },
+        {
+          "command": "zovoSvn.commit",
+          "group": "1_commit",
+          "when": "scmProvider == zovo-svn && scmResourceGroup == changes"
+        },
+        {
+          "command": "zovoSvn.commitChangelist",
+          "group": "1_commit",
+          "when": "scmProvider == zovo-svn && scmResourceGroup =~ /^cl:/"
+        },
+        {
+          "command": "zovoSvn.revertAll",
+          "group": "2_modify",
+          "when": "scmProvider == zovo-svn && scmResourceGroup != unversioned && scmResourceGroup != conflicts"
+        },
+        {
+          "command": "zovoSvn.addAll",
+          "group": "2_modify",
+          "when": "scmProvider == zovo-svn && scmResourceGroup == unversioned"
+        }
+      ],
+      "scm/resourceState/context": [
+        {
+          "command": "zovoSvn.openFile",
+          "group": "inline@1",
+          "when": "scmProvider == zovo-svn && scmResourceState != deleted && scmResourceState != missing"
+        },
+        {
+          "command": "zovoSvn.revert",
+          "group": "inline@2",
+          "when": "scmProvider == zovo-svn && scmResourceState =~ /^(modified|added|deleted|missing|replaced|props|obstructed|incomplete)$/"
+        },
+        {
+          "command": "zovoSvn.add",
+          "group": "inline@2",
+          "when": "scmProvider == zovo-svn && scmResourceState == unversioned"
+        },
+        {
+          "command": "zovoSvn.resolve",
+          "group": "inline@2",
+          "when": "scmProvider == zovo-svn && scmResourceState == conflicted"
+        },
+        {
+          "command": "zovoSvn.openChange",
+          "group": "1_open@1",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.openFile",
+          "group": "1_open@2",
+          "when": "scmProvider == zovo-svn && scmResourceState != deleted && scmResourceState != missing"
+        },
+        {
+          "command": "zovoSvn.openBase",
+          "group": "1_open@3",
+          "when": "scmProvider == zovo-svn && scmResourceState =~ /^(modified|added|deleted|missing|replaced|props|obstructed|incomplete)$/ && scmResourceState != added"
+        },
+        {
+          "command": "zovoSvn.showFileLog",
+          "group": "1_open@4",
+          "when": "scmProvider == zovo-svn && scmResourceState != unversioned && scmResourceState != added"
+        },
+        {
+          "command": "zovoSvn.commitSelected",
+          "group": "2_commit@1",
+          "when": "scmProvider == zovo-svn && scmResourceState != conflicted"
+        },
+        {
+          "command": "zovoSvn.add",
+          "group": "3_modify@1",
+          "when": "scmProvider == zovo-svn && scmResourceState == unversioned"
+        },
+        {
+          "command": "zovoSvn.ignore",
+          "group": "3_modify@2",
+          "when": "scmProvider == zovo-svn && scmResourceState == unversioned"
+        },
+        {
+          "command": "zovoSvn.revert",
+          "group": "3_modify@3",
+          "when": "scmProvider == zovo-svn"
+        },
+        {
+          "command": "zovoSvn.delete",
+          "group": "3_modify@4",
+          "when": "scmProvider == zovo-svn && scmResourceState =~ /^(modified|missing|props)$/"
+        },
+        {
+          "command": "zovoSvn.resolve",
+          "group": "3_modify@5",
+          "when": "scmProvider == zovo-svn && scmResourceState == conflicted"
+        },
+        {
+          "command": "zovoSvn.addToChangelist",
+          "group": "4_changelist@1",
+          "when": "scmProvider == zovo-svn && scmResourceState =~ /^(modified|added|deleted|missing|replaced|props|obstructed|incomplete)$/"
+        },
+        {
+          "command": "zovoSvn.removeFromChangelist",
+          "group": "4_changelist@2",
+          "when": "scmProvider == zovo-svn && scmResourceState =~ /^(modified|added|deleted|missing|replaced|props|obstructed|incomplete)$/"
+        },
+        {
+          "command": "zovoSvn.shelve",
+          "group": "5_shelve@1",
+          "when": "scmProvider == zovo-svn && scmResourceState =~ /^(modified|added|deleted|missing|replaced|props|obstructed|incomplete)$/"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "zovoSvn.showFileLog",
+          "group": "7_svn@1",
+          "when": "zovoSvn.repoCount > 0 && resourceScheme == file"
+        },
+        {
+          "command": "zovoSvn.toggleBlame",
+          "group": "7_svn@2",
+          "when": "zovoSvn.repoCount > 0 && resourceScheme == file"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "zovoSvn.toggleBlame",
+          "group": "7_svn@1",
+          "when": "zovoSvn.repoCount > 0 && resourceScheme == file"
+        },
+        {
+          "command": "zovoSvn.openLineRevision",
+          "group": "7_svn@2",
+          "when": "zovoSvn.blameOn"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "zovoSvn.showFileLog",
+          "group": "7_svn@1",
+          "when": "zovoSvn.repoCount > 0"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "zovoSvn.newChangelist",
+          "group": "navigation@1",
+          "when": "view == zovoSvn.changelists"
+        },
+        {
+          "command": "zovoSvn.refresh",
+          "group": "navigation@2",
+          "when": "view == zovoSvn.changelists"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "zovoSvn.moveToChangelist",
+          "group": "1_move",
+          "when": "view == zovoSvn.changelists && viewItem == clfile"
+        }
+      ]
+    },
+    "views": {
+      "scm": [
+        {
+          "id": "zovoSvn.changelists",
+          "name": "SVN Changelists",
+          "when": "zovoSvn.repoCount > 0",
+          "visibility": "collapsed"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "scm",
+        "contents": "This folder is an svn working copy, but the svn command line was not found.\n[Install svn](command:zovoSvn.installHelp)\n[Retry](command:zovoSvn.rescan)",
+        "when": "zovoSvn.missing"
+      },
+      {
+        "view": "zovoSvn.changelists",
+        "contents": "No changed files yet. Changelists group files so you can commit them apart.\n[New Changelist](command:zovoSvn.newChangelist)"
+      }
+    ],
+    "configuration": {
+      "title": "SVN Client",
+      "properties": {
+        "zovoSvn.path": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "markdownDescription": "Full path of the `svn` command line, for example `/opt/homebrew/bin/svn` or `C:\\Program Files\\TortoiseSVN\\bin\\svn.exe`. Empty: look on PATH and in the usual install folders. When set, only this path is used."
+        },
+        "zovoSvn.statusDelayMs": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 100,
+          "maximum": 60000,
+          "description": "Wait this long after the last file change before one svn status runs. Many changes during a build become one status run, and there is never more than one svn status per working copy at a time."
+        },
+        "zovoSvn.statusDepth": {
+          "type": "string",
+          "enum": [
+            "infinity",
+            "immediates",
+            "files",
+            "empty"
+          ],
+          "default": "infinity",
+          "enumDescriptions": [
+            "The whole working copy.",
+            "Files and folders at the top level only.",
+            "Files at the top level only.",
+            "Only the root folder itself."
+          ],
+          "description": "How deep svn status looks. Lower it for very large working copies that you only change near the top."
+        },
+        "zovoSvn.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/build/**",
+            "**/dist/**",
+            "**/target/**",
+            "**/out/**",
+            "**/.gradle/**",
+            "**/__pycache__/**"
+          ],
+          "description": "Glob patterns. File changes here do not start svn status, unversioned files here are not listed, and the working copy search does not look inside them. Versioned changes in these folders still show at the next refresh."
+        },
+        "zovoSvn.detectDepth": {
+          "type": "number",
+          "default": 3,
+          "minimum": 0,
+          "maximum": 8,
+          "description": "How many folder levels below each workspace folder to look for nested working copies (folders with their own .svn). 0 looks only at the workspace folders and the folders above them."
+        },
+        "zovoSvn.showUnversioned": {
+          "type": "boolean",
+          "default": true,
+          "description": "List unversioned files in their own group."
+        },
+        "zovoSvn.maxListedFiles": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 100,
+          "maximum": 100000,
+          "description": "Most files listed per group. The count in the Source Control view stays exact."
+        },
+        "zovoSvn.maxDiffMB": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 1024,
+          "description": "Files larger than this open without a text diff, and the gutter diff is off for them."
+        },
+        "zovoSvn.commandTimeoutSec": {
+          "type": "number",
+          "default": 120,
+          "minimum": 5,
+          "maximum": 3600,
+          "description": "Local svn commands (add, revert, info, cat BASE) are stopped after this many seconds."
+        },
+        "zovoSvn.networkTimeoutSec": {
+          "type": "number",
+          "default": 300,
+          "minimum": 5,
+          "maximum": 7200,
+          "description": "Commands that talk to the server (update, commit, log, blame, switch, merge) are stopped after this many seconds, with a message, so a server that does not answer never hangs VS Code."
+        },
+        "zovoSvn.statusTimeoutSec": {
+          "type": "number",
+          "default": 300,
+          "minimum": 5,
+          "maximum": 7200,
+          "description": "svn status is stopped after this many seconds."
+        },
+        "zovoSvn.blame.mode": {
+          "type": "string",
+          "enum": [
+            "gutter",
+            "inline"
+          ],
+          "default": "gutter",
+          "enumDescriptions": [
+            "Revision, author and date before every line.",
+            "Revision, author and date after the line the cursor is on."
+          ],
+          "description": "How Toggle Blame shows who changed each line."
+        },
+        "zovoSvn.blame.maxMB": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 512,
+          "description": "Blame runs on files up to this size."
+        },
+        "zovoSvn.log.pageSize": {
+          "type": "number",
+          "default": 100,
+          "minimum": 10,
+          "maximum": 1000,
+          "description": "Revisions per page in the log view. More load as you scroll."
+        },
+        "zovoSvn.refreshOnFocus": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run one svn status when the VS Code window gets focus, to pick up changes made in a terminal or another tool."
+        },
+        "zovoSvn.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask once for a Marketplace rating after the extension worked for you on 2 separate occasions. \"Later\" asks one more time after 7 days, \"No thanks\" never asks again. It never asks after an error. Nothing is sent anywhere."
+        },
+        "zovoSvn.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the small Rate, More free tools and Sponsor links at the bottom of the log view. Nothing is sent anywhere."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "zovoSvn.start",
+        "title": "Get started with SVN Client",
+        "description": "Commit, update, history and blame for Subversion working copies, with your own svn command line.",
+        "steps": [
+          {
+            "id": "svn",
+            "title": "Have the svn command line",
+            "description": "SVN Client runs the svn you have installed. Type svn help in a terminal to check that it is there.\n[Install help](command:zovoSvn.installHelp)",
+            "media": {
+              "markdown": "walkthrough/install.md"
+            }
+          },
+          {
+            "id": "changes",
+            "title": "See and commit your changes",
+            "description": "Open Source Control. Changes, Unversioned, Conflicts and each changelist have their own group. Type a message and press Ctrl+Enter to commit.\n[Open Source Control](command:workbench.view.scm)",
+            "media": {
+              "image": "images/changes.png",
+              "altText": "The Source Control view with SVN changes, a changelist and a conflict."
+            },
+            "completionEvents": [
+              "onCommand:workbench.view.scm"
+            ]
+          },
+          {
+            "id": "history",
+            "title": "Read the history",
+            "description": "Show Log lists revisions page by page, with filters for text, author and date, the changed paths and diffs.\n[Show Log](command:zovoSvn.showLog)",
+            "media": {
+              "markdown": "walkthrough/history.md"
+            },
+            "completionEvents": [
+              "onCommand:zovoSvn.showLog"
+            ]
+          },
+          {
+            "id": "blame",
+            "title": "See who changed a line",
+            "description": "Toggle Blame shows revision, author and date next to every line. Hover for the message and a link to the diff.\n[Toggle Blame](command:zovoSvn.toggleBlame)",
+            "media": {
+              "markdown": "walkthrough/blame.md"
+            },
+            "completionEvents": [
+              "onCommand:zovoSvn.toggleBlame"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "package": "npx -y @vscode/vsce@3 package --no-dependencies -o dist/"
+  },
+  "devDependencies": {
+    "@types/vscode": "~1.90.0"
+  },
+  "homepage": "https://github.com/theluckystrike/svn-client-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/theluckystrike/svn-client-vscode/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/svn-client-vscode"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike"
+  }
+}

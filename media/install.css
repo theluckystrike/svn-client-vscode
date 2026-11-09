@@ -1,0 +1,11 @@
+#app { overflow: auto; }
+.wrap { max-width: 760px; padding: 16px 24px 24px; }
+h1 { font-size: 1.4em; font-weight: 600; }
+h2 { font-size: 1.1em; font-weight: 600; margin-top: 1.4em; }
+.steps { display: flex; flex-direction: column; gap: 10px; }
+.step { padding: 8px 10px; border: 1px solid var(--vscode-panel-border, var(--vscode-editorWidget-border, transparent)); border-radius: 3px; }
+.step .name { font-weight: 600; margin-bottom: 4px; }
+.step .cmd { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.step code { padding: 2px 6px; background: var(--vscode-textCodeBlock-background); border-radius: 3px; }
+.actions { display: flex; gap: 8px; }
+.warn { color: var(--vscode-editorWarning-foreground); }

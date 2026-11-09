@@ -1,0 +1,21 @@
+.body { flex: 1; min-height: 0; display: flex; }
+.graph { flex: 1; overflow: auto; padding: 8px; }
+.side { width: 300px; flex: none; overflow: auto; padding: 8px 12px; border-left: 1px solid var(--vscode-panel-border, var(--vscode-editorGroup-border)); }
+.side h3 { margin: 4px 0; word-break: break-all; }
+.side .actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.side .msg { white-space: pre-wrap; font-family: var(--vscode-editor-font-family); }
+svg text { fill: var(--vscode-foreground); font-size: 12px; }
+svg .rev { fill: var(--vscode-descriptionForeground); font-size: 10px; }
+svg .tick { stroke: var(--vscode-editorIndentGuide-background, rgba(128,128,128,.2)); stroke-width: 1; }
+svg .lane { cursor: pointer; }
+svg .lane .path { stroke-width: 4; stroke-linecap: round; }
+svg .lane.trunk .path, svg .lane.trunk circle { stroke: var(--vscode-charts-blue); fill: var(--vscode-charts-blue); }
+svg .lane.branch .path, svg .lane.branch circle { stroke: var(--vscode-charts-green); fill: var(--vscode-charts-green); }
+svg .lane .end { fill: var(--vscode-editor-background) !important; stroke-width: 2; }
+svg .lane.current .name { font-weight: 700; }
+svg .lane:hover .path, svg .lane:focus .path { stroke-width: 6; }
+svg .copy { fill: none; stroke: var(--vscode-descriptionForeground); stroke-width: 1.5; stroke-dasharray: 4 3; }
+svg .tag { cursor: pointer; }
+svg .diamond { fill: var(--vscode-charts-yellow); }
+svg .tagname { fill: var(--vscode-charts-yellow); font-size: 12px; font-weight: 600; paint-order: stroke; stroke: var(--vscode-editor-background); stroke-width: 3px; }
+svg .tag:hover .tagname, svg .tag:focus .tagname { text-decoration: underline; }

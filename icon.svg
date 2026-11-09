@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="48" fill="#1B1F2E"/>
+  <!-- trunk -->
+  <path d="M84 52 V204" stroke="#5AA9FF" stroke-width="16" stroke-linecap="round" fill="none"/>
+  <!-- branch -->
+  <path d="M84 92 C84 128 172 108 172 148 V188" stroke="#4FD18B" stroke-width="16" stroke-linecap="round" fill="none"/>
+  <circle cx="84" cy="52" r="20" fill="#1B1F2E" stroke="#5AA9FF" stroke-width="12"/>
+  <circle cx="84" cy="204" r="20" fill="#5AA9FF"/>
+  <circle cx="172" cy="188" r="20" fill="#1B1F2E" stroke="#4FD18B" stroke-width="12"/>
+  <!-- revision tag -->
+  <rect x="128" y="34" width="96" height="48" rx="10" fill="#F2B84B"/>
+  <text x="176" y="68" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="700" fill="#1B1F2E" text-anchor="middle">SVN</text>
+</svg>

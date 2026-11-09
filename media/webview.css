@@ -1,0 +1,33 @@
+/* Shared webview styles. Every colour comes from the VS Code theme, so dark, light and high contrast all work. */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0; padding: 0;
+  color: var(--vscode-foreground);
+  background: var(--vscode-editor-background);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  display: flex; flex-direction: column;
+}
+#app { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.foot { flex: none; border-top: 1px solid var(--vscode-panel-border, transparent); text-align: right; }
+button {
+  font: inherit; color: var(--vscode-button-foreground); background: var(--vscode-button-background);
+  border: 1px solid var(--vscode-button-border, transparent); padding: 3px 10px; border-radius: 2px; cursor: pointer;
+}
+button:hover { background: var(--vscode-button-hoverBackground); }
+button.secondary { color: var(--vscode-button-secondaryForeground); background: var(--vscode-button-secondaryBackground); }
+button.secondary:hover { background: var(--vscode-button-secondaryHoverBackground); }
+button:disabled { opacity: .5; cursor: default; }
+input[type=text], input[type=date], input[type=search] {
+  font: inherit; color: var(--vscode-input-foreground); background: var(--vscode-input-background);
+  border: 1px solid var(--vscode-input-border, var(--vscode-panel-border, transparent)); padding: 3px 6px; border-radius: 2px;
+}
+input:focus, button:focus-visible, [tabindex]:focus-visible { outline: 1px solid var(--vscode-focusBorder); outline-offset: -1px; }
+a { color: var(--vscode-textLink-foreground); }
+.muted { color: var(--vscode-descriptionForeground); }
+.error { color: var(--vscode-errorForeground); }
+code, .mono { font-family: var(--vscode-editor-font-family); font-size: var(--vscode-editor-font-size); }
+.toolbar { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 8px 10px; border-bottom: 1px solid var(--vscode-panel-border, transparent); }
+.toolbar label { display: inline-flex; gap: 4px; align-items: center; }
+.pro-tag { font-size: 10px; padding: 0 4px; border-radius: 3px; border: 1px solid var(--vscode-descriptionForeground); color: var(--vscode-descriptionForeground); }
