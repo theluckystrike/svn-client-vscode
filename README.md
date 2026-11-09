@@ -126,7 +126,7 @@ The SVN Changelists view in the Source Control side bar lists each changelist an
 
 ## Free and Pro
 
-Every feature above is free in this version. A later version may offer Zovo Pro for the revision graph, shelving and the changelist manager. Zovo Pro is USD 15 once on [GitHub Sponsors](https://github.com/sponsors/theluckystrike) and unlocks the Pro features in every Zovo VS Code extension. Status, commit, diff, update, log, blame, branches and merge stay free for good. There are no ads, no countdown and no popups.
+Every feature above is free in this version. A later version may offer Zovo Pro for the revision graph, shelving and the changelist manager. Zovo Pro is USD 19 once on [GitHub Sponsors](https://github.com/sponsors/theluckystrike/sponsorships?tier_id=679878) and unlocks the Pro features in every Zovo VS Code extension. Status, commit, diff, update, log, blame, branches and merge stay free for good. There are no ads, no countdown and no popups.
 
 ## Limits
 

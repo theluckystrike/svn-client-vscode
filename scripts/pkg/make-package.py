@@ -46,7 +46,7 @@ cmds = [
  ('zovoSvn.moreViewers', 'More free tools by Zovo', None),
  ('zovoSvn.unlockWithSponsors', 'Unlock Zovo Pro with GitHub Sponsors', None),
  ('zovoSvn.enterLicenseKey', 'Enter Zovo license key', None),
- ('zovoSvn.getPro', 'Get Zovo Pro (USD 15 once, all Zovo tools)', None),
+ ('zovoSvn.getPro', 'Get Zovo Pro (USD 19 once, all Zovo tools)', None),
  ('zovoSvn.removeLicense', 'Remove Zovo license from this editor', None),
 ]
 commands = []
